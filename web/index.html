@@ -1,0 +1,313 @@
+<html lang="fr">
+<head>
+	<title>WebSIG et Cartographie des communautés</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=yes"/>
+	
+	<!-- Ajout de l'icone CED-->
+	<link href="img/logo.png" rel="shortcut icon" type="image/x-icon"/>
+
+	<!--	Fichiers CSS-->
+	<link rel="stylesheet" href="lib/js/leaflet/leaflet.css"/>
+	<link rel="stylesheet" href="lib/js/leaflet.zoomhome-master/dist/leaflet.zoomhome.css"/>
+	<link rel="stylesheet" href="lib/js/fontawesome-free-5.10.2-web/css/all.css"/>
+	<link rel="stylesheet" href="lib/js/Leaflet.MousePosition-master/src/L.Control.MousePosition.css"/>
+	<!-- <link rel="stylesheet" href="lib/js/Leaflet.draw/dist/leaflet.draw.css"/> -->
+	<link rel="stylesheet" href="lib/js/Leaflet.StyledLayerControl-master/css/styledLayerControl.css"/>
+	<link rel="stylesheet" href="lib/js/Leaflet-search-master/src/Leaflet-search.css"/>
+	<link rel="stylesheet" href="lib/css/reset.css">
+	<link rel="stylesheet" href="lib/css/style.css"/>
+	<link rel="stylesheet" href="lib/css/boostrap-3.4.0.css"/>
+	<link rel="stylesheet" href="lib/js/Leaflet-search-master/src/Leaflet-search.css"/>
+	<!-- <link rel="stylesheet" href="lib/js/leaflet-search-master/dist/leaflet-search.src.css" /> -->
+
+	<!-- Ajout des fichiers script-->
+	<script type="text/javascript" src="lib/js/leaflet/leaflet.js"></script>
+	<script type="text/javascript" src="lib/js/jquery/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="lib/js/leaflet.zoomhome-master/dist/leaflet.zoomhome.js"></script>
+	<script type="text/javascript" src="lib/js/Leaflet.MousePosition-master/src/L.Control.MousePosition.js"></script>
+	<script type="text/javascript" src="lib/js/Leaflet.StyledLayerControl-master/src/styledLayerControl.js"></script>
+
+	<link rel="stylesheet" href="data/Leaflet.GraphicScale.min.css"/>
+	
+	<script type="text/javascript" src="data/Leaflet.GraphicScale.min.js"></script>
+	<!-- <script src="lib/js/Leaflet.draw/dist/leaflet.draw.js"></script> -->
+	<script src="lib/js/leaflet-hash-master/leaflet-hash.js"></script>
+	<script src="lib/js/jquery-min.js" type="text/javascript"></script>
+	<script src="lib/js/boostrap.js" type="text/javascript"></script>
+	<script type="text/javascript" src="lib/js/Leaflet-search-master/src/Leaflet-search.js"></script>
+
+	<!-- <script src="data/js/parcelles.js"></script> -->
+	<script src="data/js/zones.js"></script>
+	<script src="data/js/search.js"></script>
+	
+	<style>
+		@font-face {
+            font-family: 'icon';
+            font-weight: 'normal';
+            font-style: 'normal';
+        }
+
+        [class^="icon-"], [class*=" icon-"] {
+            font-family: 'icon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            /* Better Font Rendering =========== */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .icon-eye-slash:before {
+            content: "\e903";
+        }
+
+        .icon-eye:before {
+            content: "\e904";
+        }
+		
+		.search-tip b {
+		color: #fff;
+		}
+		.Planteur.search-tip b,
+		.Planteur.leaflet-marker-icon {
+			background: #f66
+		}
+		.Zone agricole.search-tip b,
+		.Zone agricole.leaflet-marker-icon {
+			background: #f6f
+		}
+		.search-tip {
+			white-space: nowrap;
+		}
+		.search-tip b {
+			display: inline-block;
+			clear: left;
+			float: right;
+			padding: 0 4px;
+			margin-left: 4px;
+		}
+
+		.leaflet-top.leaflet-left {
+			left: unset !important;
+			right: 0 !important;
+		}
+		.leaflet-top.leaflet-right {
+			right: unset !important;
+			left: 0 !important;
+		}
+
+		.ac-container input.menu:checked + label, .ac-container input.menu:checked + label:hover {
+			background: #49fc7f !important;
+		}
+		input[type=checkbox], input[type=radio] {
+			background-color: #49fc7f !important;
+		}
+
+		.leaflet-control-zoomhome.leaflet-bar.leaflet-control {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.leaflet-control-zoomhome-in, .leaflet-control-zoomhome-home, .leaflet-control-zoomhome-out {
+			border-radius: 0 !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+		}
+		.leaflet-top.leaflet-left {
+			display: flex;
+			align-items: center;
+		}
+		.zone-name {
+			position: fixed !important;
+			bottom: 0 !important;
+			min-height: 100px !important;
+			/* max-height: 300px !important; */
+			overflow-y: auto !important;
+			left: 0 !important;
+			right: 0 !important;
+			background-color: #fff !important;
+			padding: 1rem;
+		}
+		.d-flex {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 100%;
+			padding-top: 1rem;
+		}
+		.nav-img {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
+		.text {
+			font-size: 20px !important;
+			font-weight: 700;
+			color: #606149;
+		}
+	</style>		
+</head> 
+<body>
+	<div id="wrapper">
+		<header> 
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">GECOM - WebMapping</a> -->
+
+					<div class="d-flex">
+						<div class="nav-img">
+							<img src="img/logo-ecole.png" height="26px">
+						</div>
+						<div class="text">
+							<span class="text">WebSIG et Cartographie des communautés</span>
+							<!-- <span class="text">PROJET INTÉGRATEUR: CARTOGRAPHIE DES COMMUNAUTÉS ET WEBMAPPING</span> -->
+						</div>
+						<div class="nav-img">
+							<img alt="Brand" src="img/logo.png" height="26px">
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div id="content">
+			<!--Ajout du div de la map-->
+			<div id='map'>
+				<!-- <div id="controls" align="center"> -->
+				<!-- <input type="button" class="button"  onclick="startEdits()" value="Point"/>&nbsp; -->
+				<!-- <input type="button" class="button"  onclick="startEdits1()" value="Ligne"/>&nbsp; -->
+				<!-- <input type="button" class="button"  onclick="startEdits2()" value="Polygone"/>&nbsp; -->
+				<!-- <input type="button" class="button"  onclick="startEdits3()" value="Outils d'édition"/>&nbsp; -->
+				<!-- <input type="button" class="button"  onclick="stopEdits(), stopEdits1(), stopEdits2(), stopEdits3()"value="Reset"/> -->
+				<!-- </div> -->
+			</div>
+		</div>
+	</div>
+
+	<!--Modal des forêts-->
+    <div id="mymodal_foret" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header" style="background-color:#e9ead7">
+				<h5 class="modal-title"  id="mod-titre" style="text-align:center; font-weight:bold; color:#606149"></h5>
+			</div>
+			<div class="modal-body" id="mod-body_foret">
+			</div>
+			<div class="modal-footer_foret" style="background-color:#d9dac6">
+				<button type="button" class="btn btn-primary"data-dismiss="modal">Close</button>
+			</div>
+        </div>
+      </div>
+    </div>
+
+
+	<script>
+		$("#leftside-navigation .sub-menu > a").click(function(e) {
+		  $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
+		  e.stopPropagation();
+		});
+
+		function myFunction(){
+			var x = document.getElementById("controls");
+			if (x.style.display ==="block"){
+				x.style.display = "none";
+			}else {
+				x.style.display = "block";
+			}
+		}
+	</script>
+
+	<script>
+		//uses classList, setAttribute, and querySelectorAll
+		//if you want this to work in IE8/9 youll need to polyfill these
+		(function(){
+			var d = document,
+			accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+			setAria,
+			setAccordionAria,
+			switchAccordion,
+			touchSupported = ('ontouchstart' in window),
+			pointerSupported = ('pointerdown' in window);
+			  
+			skipClickDelay = function(e){
+				e.preventDefault();
+				e.target.click();
+			}
+
+			setAriaAttr = function(el, ariaType, newProperty){
+				el.setAttribute(ariaType, newProperty);
+			};
+			
+			setAccordionAria = function(el1, el2, expanded){
+				switch(expanded) {
+				case "true":
+					setAriaAttr(el1, 'aria-expanded', 'true');
+					setAriaAttr(el2, 'aria-hidden', 'false');
+				break;
+				case "false":
+					setAriaAttr(el1, 'aria-expanded', 'false');
+					setAriaAttr(el2, 'aria-hidden', 'true');
+				break;
+				default:
+					break;
+				}
+			};
+			
+			//function
+			switchAccordion = function(e) {
+			  	console.log("triggered");
+				e.preventDefault();
+				var thisAnswer = e.target.parentNode.nextElementSibling;
+				var thisQuestion = e.target;
+				if(thisAnswer.classList.contains('is-collapsed')) {
+					setAccordionAria(thisQuestion, thisAnswer, 'true');
+				} else {
+					setAccordionAria(thisQuestion, thisAnswer, 'false');
+				}
+				thisQuestion.classList.toggle('is-collapsed');
+				thisQuestion.classList.toggle('is-expanded');
+				thisAnswer.classList.toggle('is-collapsed');
+				thisAnswer.classList.toggle('is-expanded');
+				thisAnswer.classList.toggle('animateIn');
+			};
+
+			for (var i=0,len=accordionToggles.length; i<len; i++) {
+				if(touchSupported) {
+				  	accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+				}
+				if(pointerSupported){
+				  	accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
+				}
+				accordionToggles[i].addEventListener('click', switchAccordion, false);
+			}
+		})();
+	</script>
+
+	<script>
+		window.print = function () {
+			return domtoimage.toPng(document.body)
+				.then(function (dataUrl) {
+					var link = document.createElement('a');
+					link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
+					link.href = dataUrl;
+					link.click();
+				});
+		};
+	</script>
+
+	<script src="lib/js/app.js"></script>
+</body>
+</html>

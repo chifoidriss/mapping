@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.leaflet-control-graphicscale .label {
+    font-family: 'Italianno', cursive;
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+
+.leaflet-control-graphicscale .labelSub {
+    font-size: 21px;
+    margin-bottom: 4px;
+}
+
+.leaflet-control-graphicscale .line {
+    border-color: rgb(107, 55, 32);
+}
+
+.leaflet-control-graphicscale .filled .fill {
+    background-color: rgb(107, 55, 32);
+}
+
+.scaleText {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.scaleText h1, .scaleText p {
+    margin: 0;
+}
+
+.scaleText h1 {
+    font-family: 'Italianno', cursive;
+    font-size: 30px;
+}
+
+.scaleText .choice {
+    margin: 0 5px;
+    cursor: pointer;
+}
